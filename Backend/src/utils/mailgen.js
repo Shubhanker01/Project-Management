@@ -1,5 +1,42 @@
 import Mailgen from "mailgen"
+import nodemailer from "nodemailer"
 
+
+const sendEmail = async (options) => {
+    const mailGenerator = new Mailgen({
+        theme: "default",
+        product: {
+            name: "Task Manager",
+            link: "https://taskmanager.com"
+        }
+    })
+
+    const emailTextual = mailGenerator.generatePlaintext(options.mailgenContent)
+    const emailHtml = mailGenerator.generate(options.mailgenContent)
+
+    const transport = nodemailer.createTransport({
+        host: process.env.MAILTRAP_SMPT_HOST,
+        port: process.env.MAILTRAP_SMPT_PORT,
+        auth: {
+            user: process.env.MAILTRAP_SMPT_USER,
+            pass: process.env.MAILTRAP_SMPT_PASS
+        }
+    });
+
+    const mail = {
+        from: process.env.EMAIL,
+        to: options.email,
+        subject: options.subject,
+        text: emailTextual,
+        html: emailHtml
+    }
+    try {
+        await transport.sendMail(mail)
+    } catch (error) {
+        console.error("Email Service failed")
+    }
+
+}
 const emailVerificationContent = (username, verificationUrl) => {
     return {
         body: {
@@ -38,5 +75,6 @@ const passwordResetContent = (username, passwordResetUrl) => {
 
 export {
     emailVerificationContent,
-    passwordResetContent
+    passwordResetContent,
+    sendEmail
 }
