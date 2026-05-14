@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import healthCheckRouter from './routes/healthcheck.route.js'
+import authRouter from './routes/auth.route.js'
 
 const app = express()
 const port = process.env.PORT || 4000
@@ -16,7 +17,9 @@ app.use(cors({
 }))
 
 // health check router
-app.use('/api/v1/healthcheck',healthCheckRouter)
+app.use('/api/v1/healthcheck', healthCheckRouter)
+// auth router
+app.use('/api/v1/auth', authRouter)
 
 app.get('/', (req, res) => {
     res.send("Hello everyone")

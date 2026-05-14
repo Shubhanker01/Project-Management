@@ -64,9 +64,9 @@ const userSchema = new Schema({
 // defining prehook
 userSchema.pre("save", async function () {
     // when not changing the password move immediately to next
-    if (!this.isModified("password")) return next()
-    this.password = await bcrypt.hash(this.password)
-    next()
+    if (!this.isModified("password")) return
+    this.password = await bcrypt.hash(this.password, 10)
+
 })
 
 userSchema.methods.passwordValidate = async function (password) {
