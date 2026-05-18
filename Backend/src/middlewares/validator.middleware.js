@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator'
-import { ApiError } from '../utils/api-error'
+import { ApiError } from '../utils/api-error.js'
 export const validate = (req, res, next) => {
     const errors = validationResult(req)
     if (errors.isEmpty()) {
@@ -12,5 +12,5 @@ export const validate = (req, res, next) => {
             [err.path]: err.msg
         })
     })
-    throw new ApiError(402, "Received data is not valid", extractedErrors)
+    throw new ApiError(401, "Received data is not valid", extractedErrors)
 }

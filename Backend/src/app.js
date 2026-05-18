@@ -3,6 +3,7 @@ import cors from 'cors'
 import healthCheckRouter from './routes/healthcheck.route.js'
 import authRouter from './routes/auth.route.js'
 import cookieParser from 'cookie-parser'
+import verifyEmailRouter from './routes/emailverify.route.js'
 
 const app = express()
 
@@ -22,6 +23,8 @@ app.use(cors({
 app.use('/api/v1/healthcheck', healthCheckRouter)
 // auth router
 app.use('/api/v1/auth', authRouter)
+// verify email router
+app.use('/api/v1/users', verifyEmailRouter)
 
 app.get('/', (req, res) => {
     res.send("Hello everyone")
