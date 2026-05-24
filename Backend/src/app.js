@@ -4,6 +4,7 @@ import healthCheckRouter from './routes/healthcheck.route.js'
 import authRouter from './routes/auth.route.js'
 import cookieParser from 'cookie-parser'
 import verifyEmailRouter from './routes/emailverify.route.js'
+import ProjectRouter from './routes/project.route.js'
 
 const app = express()
 
@@ -25,6 +26,8 @@ app.use('/api/v1/healthcheck', healthCheckRouter)
 app.use('/api/v1/auth', authRouter)
 // verify email router
 app.use('/api/v1/users', verifyEmailRouter)
+// project router
+app.use('/api/v1/projects', ProjectRouter)
 
 app.get('/', (req, res) => {
     res.send("Hello everyone")
