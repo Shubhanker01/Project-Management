@@ -1,9 +1,10 @@
 import { useState } from 'react'
+import AppRouter from './routes/AppRouter'
 
 function App() {
   return (
     <>
-      <h1 className='text-red-400'>Hello World</h1>
+      <AppRouter />
     </>
   )
 }
