@@ -53,7 +53,7 @@ const registerUser = asyncHandler(async (req, res) => {
         subject: "Please Verify your Email",
         mailgenContent: emailVerificationContent(
             user.username,
-            `${req.protocol}://${req.get("host")}/api/v1/users/verify-email/${unHashedToken}`
+            `${process.env.CLIENT_URL}/email-verify/${unHashedToken}`
         )
     })
 
@@ -98,8 +98,7 @@ const login = asyncHandler(async (req, res) => {
     }
 
     const options = {
-        httpOnly: true,
-        secure: true
+        httpOnly: true
     }
     return res.status(200).cookie("accessToken", accessToken, options).cookie("refreshToken", refreshToken, options)
         .json(
@@ -177,7 +176,7 @@ const resendEmailVerification = asyncHandler(async (req, res) => {
         subject: "Please Verify your Email",
         mailgenContent: emailVerificationContent(
             user.username,
-            `${req.protocol}://${req.get("host")}/api/v1/users/verify-email/${unHashedToken}`
+            `${process.env.CLIENT_URL}/email-verify/${unHashedToken}`
         )
     })
     return res.status(200).json(

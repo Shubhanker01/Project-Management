@@ -16,8 +16,8 @@ app.use(express.urlencoded({ limit: '16kb', extended: true }))
 app.use(cookieParser())
 // cors configuration
 app.use(cors({
-    origin: process.env.ORIGIN?.split(",") || "http://localhost:5173",
-    allowedHeaders: ["Content-Type", "Authorization"]
+    origin: ['http://localhost:5173'],
+    credentials:true
 }))
 
 // health check router
