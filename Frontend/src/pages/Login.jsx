@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { login } from '../services/auth'
 import { displayNotification } from '../utils/toastmessage'
+import { useNavigate } from 'react-router-dom'
 
 function Login() {
     const [data, setData] = useState({ email: "", password: "" })
+    const navigate = useNavigate()
 
     const formSubmit = async (e) => {
         try {
@@ -11,6 +13,10 @@ function Login() {
             const json = await displayNotification(login(data))
             console.log(json?.data)
             setData({ ...data, email: "", password: "" })
+            if (json.data) {
+                navigate(`/main-app/${json?.data?.data?._id}`)
+            }
+
         } catch (error) {
             console.log(error)
         }

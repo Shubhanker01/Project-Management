@@ -5,6 +5,7 @@ import Login from '../pages/Login'
 import Signup from '../pages/Signup'
 import EmailVerificationConfirm from '../pages/EmailVerificationConfirm'
 import EmailVerificationPage from '../pages/EmailVerificationPage'
+import MainApp from '../pages/MainApp'
 
 function AppRouter() {
     return (
@@ -15,6 +16,7 @@ function AppRouter() {
                 <Route path='/signup' element={<Signup />}></Route>
                 <Route path='/email-confirm' element={<EmailVerificationConfirm />}></Route>
                 <Route path='/email-verify/:token' element={<EmailVerificationPage />}></Route>
+                <Route path='/main-app/:userId' element={<MainApp />}></Route>
             </Routes>
         </>
     )
