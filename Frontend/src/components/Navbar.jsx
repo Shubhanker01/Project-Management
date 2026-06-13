@@ -15,8 +15,9 @@ import {
     Settings,
 } from "lucide-react";
 import NavItem from "./NavItem"
+import { NavLink } from 'react-router-dom'
 
-export default function Navbar() {
+export default function Navbar({ userId }) {
     return (
         <aside className="h-screen w-64 bg-zinc-950 border-r border-zinc-800 text-zinc-200 flex flex-col">
 
@@ -33,11 +34,31 @@ export default function Navbar() {
             {/* Navigation */}
             <nav className="flex-1 px-3 py-4 space-y-1">
 
-                <NavItem icon={<Home size={18} />} label="Home" />
-                <NavItem icon={<User size={18} />} label="User Profile" />
-                <NavItem icon={<FolderKanban size={18} />} label="Your Projects" />
-                <NavItem icon={<CheckSquare size={18} />} label="Tasks" />
-                <NavItem icon={<Settings size={18} />} label="Settings" />
+                <NavLink to={`/main-app/${userId}`} className={({ isActive }) =>
+                    isActive ? "text-blue-400" : ""
+                } end>
+                    <NavItem icon={<Home size={18} />} label="Home" />
+                </NavLink>
+                <NavLink to={`/main-app/${userId}/user-profile`} className={({ isActive }) =>
+                    isActive ? "text-blue-400" : ""
+                }>
+                    <NavItem icon={<User size={18} />} label="User Profile" />
+                </NavLink>
+                <NavLink to={`/main-app/${userId}/user-projects`} className={({ isActive }) =>
+                    isActive ? "text-blue-400" : ""
+                }>
+                    <NavItem icon={<FolderKanban size={18} />} label="Your Projects" />
+                </NavLink>
+                <NavLink to={`/main-app/${userId}/tasks`} className={({ isActive }) =>
+                    isActive ? "text-blue-400" : ""
+                }>
+                    <NavItem icon={<CheckSquare size={18} />} label="Tasks" />
+                </NavLink>
+                <NavLink to={`/main-app/${userId}/settings`} className={({ isActive }) =>
+                    isActive ? "text-blue-400" : ""
+                }>
+                    <NavItem icon={<Settings size={18} />} label="Settings" />
+                </NavLink>
 
             </nav>
 

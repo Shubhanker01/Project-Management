@@ -6,6 +6,11 @@ import Signup from '../pages/Signup'
 import EmailVerificationConfirm from '../pages/EmailVerificationConfirm'
 import EmailVerificationPage from '../pages/EmailVerificationPage'
 import MainApp from '../pages/MainApp'
+import Settings from '../pages/Settings'
+import UserProfile from '../pages/UserProfile'
+import UserProjects from '../pages/UserProjects'
+import Tasks from '../pages/Tasks'
+import Dashboard from '../pages/Dashboard'
 
 function AppRouter() {
     return (
@@ -16,7 +21,13 @@ function AppRouter() {
                 <Route path='/signup' element={<Signup />}></Route>
                 <Route path='/email-confirm' element={<EmailVerificationConfirm />}></Route>
                 <Route path='/email-verify/:token' element={<EmailVerificationPage />}></Route>
-                <Route path='/main-app/:userId' element={<MainApp />}></Route>
+                <Route path='/main-app/:userId' element={<MainApp />}>
+                    <Route index element={<Dashboard />}></Route>
+                    <Route path='user-profile' element={<UserProfile />} />
+                    <Route path='user-projects' element={<UserProjects />} />
+                    <Route path='settings' element={<Settings />} />
+                    <Route path='tasks' element={<Tasks />}></Route>
+                </Route>
             </Routes>
         </>
     )
