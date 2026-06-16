@@ -1,6 +1,21 @@
 import { useState } from "react";
+import { Button } from "@/components/ui/button"
+import {
+    Dialog,
+    DialogClose,
+    DialogContent,
+    DialogDescription,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+import { Field, FieldGroup } from "@/components/ui/field"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { InputGroupTextarea } from "../ui/input-group";
 
-export default function ProjectCreationForm({ onSubmit }) {
+export default function ProjectCreationForm() {
     const [formData, setFormData] = useState({
         name: "",
         description: "",
@@ -14,11 +29,10 @@ export default function ProjectCreationForm({ onSubmit }) {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-
+        e.preventDefault()
         if (!formData.name.trim()) return;
 
-        onSubmit?.(formData);
+        console.log(formData)
 
         setFormData({
             name: "",
@@ -27,52 +41,46 @@ export default function ProjectCreationForm({ onSubmit }) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-                <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-zinc-300 mb-2"
-                >
-                    Project Name
-                </label>
+        <>
+            <Dialog>
 
-                <input
-                    id="name"
-                    name="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Enter project name"
-                    className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    required
-                />
-            </div>
+                <DialogTrigger asChild>
+                    <Button
+                        className="bg-indigo-600 hover:bg-indigo-500 transition px-4 py-2 rounded-lg font-medium shadow fixed bottom-4.5 right-4.5 cursor-pointer"
+                    >
+                        + Add Project
+                    </Button>
+                </DialogTrigger>
 
-            <div>
-                <label
-                    htmlFor="description"
-                    className="block text-sm font-medium text-zinc-300 mb-2"
-                >
-                    Description
-                </label>
+                <DialogContent className="sm:max-w-sm bg-slate-700 text-slate-100">
+                    <form onSubmit={handleSubmit}>
+                        <DialogHeader>
+                            <DialogTitle className='text-xl'>Add Project</DialogTitle>
+                            <DialogDescription className='text-slate-300 text-lg'>
+                                Create a new project by filling in the details below.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <FieldGroup>
+                            <Field>
+                                <Label htmlFor="name">Name</Label>
+                                <Input id="name" name="name" value={formData.name} onChange={handleChange} />
+                            </Field>
+                            <Field>
+                                <Label htmlFor="description">Description</Label>
+                                <InputGroupTextarea id="description" name="description" value={formData.description} onChange={handleChange} />
+                            </Field>
+                        </FieldGroup>
+                        <DialogFooter className="bg-slate-800">
+                            <DialogClose asChild>
+                                <Button className="bg-red-600 text-slate-200" variant="outline">Cancel</Button>
+                            </DialogClose>
+                            <Button type="submit">Save changes</Button>
+                        </DialogFooter>
+                    </form>
+                </DialogContent>
 
-                <textarea
-                    id="description"
-                    name="description"
-                    rows={4}
-                    value={formData.description}
-                    onChange={handleChange}
-                    placeholder="Describe your project..."
-                    className="w-full rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-zinc-100 placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
-                />
-            </div>
+            </Dialog>
 
-            <button
-                type="submit"
-                className="w-full rounded-lg bg-indigo-600 py-2 font-medium text-white hover:bg-indigo-500 transition-colors"
-            >
-                Create Project
-            </button>
-        </form>
+        </>
     );
 }
