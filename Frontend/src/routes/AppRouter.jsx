@@ -11,6 +11,7 @@ import UserProfile from '../pages/UserProfile'
 import UserProjects from '../pages/UserProjects'
 import Tasks from '../pages/Tasks'
 import Dashboard from '../pages/Dashboard'
+import Project from '@/pages/Project'
 
 function AppRouter() {
     return (
@@ -24,7 +25,9 @@ function AppRouter() {
                 <Route path='/main-app/:userId' element={<MainApp />}>
                     <Route index element={<Dashboard />}></Route>
                     <Route path='user-profile' element={<UserProfile />} />
-                    <Route path='user-projects' element={<UserProjects />} />
+                    <Route path='user-projects' element={<UserProjects />} >
+                    </Route>
+                    <Route path='user-projects/:projectId' element={<Project />}></Route>
                     <Route path='settings' element={<Settings />} />
                     <Route path='tasks' element={<Tasks />}></Route>
                 </Route>

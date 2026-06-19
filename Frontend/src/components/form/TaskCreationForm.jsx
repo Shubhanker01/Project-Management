@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState } from "react";
 import { Button } from "@/components/ui/button"
 import {
@@ -14,13 +15,15 @@ import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { InputGroupTextarea } from "../ui/input-group";
-import { createProject, getProjects } from "@/services/projects";
-import { displayNotification } from "@/utils/toastmessage";
 
-export default function ProjectCreationForm({ setProjects }) {
+
+function TaskCreationForm() {
+
     const [formData, setFormData] = useState({
-        name: "",
+        title: "",
         description: "",
+        status: "not done",
+        assignedTo: ""
     });
 
     const handleChange = (e) => {
@@ -30,55 +33,57 @@ export default function ProjectCreationForm({ setProjects }) {
         }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
-        try {
-            if (!formData.name.trim()) return;
-            const json = await displayNotification(createProject(formData))
-            console.log(json?.data)
-            const res = await getProjects()
-            const jsonData = await res.data
-            setProjects(jsonData.data)
-            setFormData({
-                name: "",
-                description: "",
-            });
-        } catch (error) {
-            console.log(error)
-        }
+        if (!formData.title.trim()) return;
 
+        console.log(formData)
+
+        setFormData({
+            title: "",
+            description: "",
+            status: "not done",
+            assignedTo: ""
+        });
     };
-
     return (
-        <>
+        <div>
             <Dialog>
-
                 <DialogTrigger asChild>
                     <Button
                         className="bg-indigo-600 hover:bg-indigo-500 transition px-4 py-2 rounded-lg font-medium shadow fixed bottom-4.5 right-4.5 cursor-pointer"
                     >
-                        + Add Project
+                        Add Task
                     </Button>
                 </DialogTrigger>
 
                 <DialogContent className="sm:max-w-sm bg-slate-700 text-slate-100">
                     <form onSubmit={handleSubmit}>
                         <DialogHeader>
-                            <DialogTitle className='text-xl'>Add Project</DialogTitle>
+                            <DialogTitle className='text-xl'>Add Task</DialogTitle>
                             <DialogDescription className='text-slate-300 text-lg'>
-                                Create a new project by filling in the details below.
+                                Create a new task by filling in the details below.
                             </DialogDescription>
                         </DialogHeader>
                         <FieldGroup>
                             <Field>
-                                <Label htmlFor="name">Name</Label>
-                                <Input id="name" name="name" value={formData.name} onChange={handleChange} required={true} />
+                                <Label htmlFor="title">Title</Label>
+                                <Input id="title" name="title" value={formData.title} onChange={handleChange} />
                             </Field>
                             <Field>
                                 <Label htmlFor="description">Description</Label>
                                 <InputGroupTextarea id="description" name="description" value={formData.description} onChange={handleChange} />
                             </Field>
+                            <Field>
+                                <Label htmlFor="assignedTo">Title</Label>
+                                <Input id="assignedTo" name="assignedTo" value={formData.assignedTo} onChange={handleChange} />
+                            </Field>
+                            <Field>
+                                <Label htmlFor="status">Status</Label>
+                                <InputGroupTextarea id="status" name="status" value={formData.status} onChange={handleChange} />
+                            </Field>
                         </FieldGroup>
+
                         <DialogFooter className="bg-slate-800">
                             <DialogClose asChild>
                                 <Button className="bg-red-600 text-slate-200" variant="outline">Cancel</Button>
@@ -89,7 +94,8 @@ export default function ProjectCreationForm({ setProjects }) {
                 </DialogContent>
 
             </Dialog>
-
-        </>
-    );
+        </div>
+    )
 }
+
+export default TaskCreationForm

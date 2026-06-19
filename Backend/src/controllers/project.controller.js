@@ -21,7 +21,7 @@ const getProjects = asyncHandler(async (req, res) => {
             // fetch the project from project collection whose Id matches
             $lookup: {
                 from: "projects",
-                localField: "projects",
+                localField: "project",
                 foreignField: "_id",
                 as: "projects",
                 pipeline: [
@@ -30,7 +30,7 @@ const getProjects = asyncHandler(async (req, res) => {
                         $lookup: {
                             from: "projectmembers",
                             localField: "_id",
-                            foreignField: "projects",
+                            foreignField: "project",
                             as: "projectmembers"
                         }
                     },
@@ -46,22 +46,22 @@ const getProjects = asyncHandler(async (req, res) => {
             }
         },
         {
-            $unwind: "$project"
+            $unwind: "$projects"
         },
-        {
-            $project: {
-                project: {
-                    _id: 1,
-                    name: 1,
-                    description: 1,
-                    members: 1,
-                    createdAt: 1,
-                    createdBy: 1
-                },
-                role: 1,
-                _id: 0
-            }
-        }
+        // {
+        //     $project: {
+        //         project: {
+        //             _id: 1,
+        //             name: 1,
+        //             description: 1,
+        //             members: 1,
+        //             createdAt: 1,
+        //             createdBy: 1
+        //         },
+        //         role: 1,
+        //         _id: 0
+        //     }
+        // }
     ])
 
     return res.status(200).json(
@@ -137,18 +137,12 @@ const addMemberToProject = asyncHandler(async (req, res) => {
     if (!project || !user) {
         throw new ApiError(404, "Some Document Not Found")
     }
-    await ProjectMember.findByIdAndUpdate({
-        user: new mongoose.Types.ObjectId(user._id),
-        project: new mongoose.Types.ObjectId(project._id)
-    }, {
+
+    await ProjectMember.create({
         user: new mongoose.Types.ObjectId(user._id),
         project: new mongoose.Types.ObjectId(project._id),
         role: role
-    }, {
-        new: true,
-        upsert: true
     })
-
     return res.status(201).json(
         new ApiResponse(201, {}, "User successfully added or updated")
     )
