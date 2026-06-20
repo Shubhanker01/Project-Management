@@ -120,7 +120,47 @@ const deleteProject = asyncHandler(async (req, res) => {
 
 const getProjectById = asyncHandler(async (req, res) => {
     const { projectId } = req.params
-    const project = await Project.findById(projectId)
+    const project = await Project.aggregate([
+        {
+            $match: {
+                _id: new mongoose.Types.ObjectId(projectId),
+            },
+        },
+        {
+            $lookup: {
+                from: "projectmembers",
+                localField: "_id",
+                foreignField: "project",
+                as: "projectMembers",
+            },
+        },
+        {
+            $addFields: {
+                "totalMembers": {
+                    $size: "$projectMembers"
+                }
+            }
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "projectMembers.user",
+                foreignField: "_id",
+                as: "userDetails",
+            },
+        },
+        {
+            $project: {
+                "userDetails.password": 0,
+                "userDetails.isEmailVerified": 0,
+                "userDetails.emailVerificationExpiry": 0,
+                "userDetails.emailVerificationToken": 0,
+                "userDetails.refreshToken": 0,
+                "userDetails.createdAt": 0,
+                "userDetails.updatedAt": 0,
+            },
+        },
+    ])
     if (!project) {
         throw new ApiError(404, "Project Not Found")
     }
