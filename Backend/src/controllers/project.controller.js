@@ -213,6 +213,7 @@ const getProjectMembers = asyncHandler(async (req, res) => {
                             _id: 1,
                             username: 1,
                             fullName: 1,
+                            email: 1,
                             avatar: 1
                         }
                     }
@@ -226,16 +227,16 @@ const getProjectMembers = asyncHandler(async (req, res) => {
                 }
             }
         },
-        {
-            $project: {
-                project: 1,
-                user: 1,
-                role: 1,
-                createdAt: 1,
-                updatedAt: 1,
-                _id: 0
-            }
-        }
+        // {
+        //     $project: {
+        //         project: 1,
+        //         user: 1,
+        //         role: 1,
+        //         createdAt: 1,
+        //         updatedAt: 1,
+        //         _id: 0
+        //     }
+        // }
     ])
     return res.status(200).json(
         new ApiResponse(200, projectMembers, "Project members fetched Successfully")

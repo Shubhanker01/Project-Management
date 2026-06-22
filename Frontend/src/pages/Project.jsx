@@ -2,7 +2,6 @@ import {
     Card,
     CardHeader,
     CardTitle,
-    CardDescription,
     CardContent,
 } from "@/components/ui/card";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
@@ -12,13 +11,13 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip"
 
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState } from "react";
 import { getProject } from "@/services/projects";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import UpdateProjectModal from "@/components/form/UpdateProjectForm";
 import DeleteProjectDialog from "@/components/form/DeleteProjectForm";
+import { ItemContent } from "@/components/ui/item";
 
 export default function Project() {
     const [project, setProject] = useState({
@@ -27,7 +26,7 @@ export default function Project() {
         totalMembers: 0,
         members: []
     })
-    const { projectId } = useParams()
+    const { projectId, userId } = useParams()
     useEffect(() => {
         async function getIndividualProject() {
             try {
@@ -130,6 +129,12 @@ export default function Project() {
                                 </div>
                             })
                         }
+                        <ItemContent className="text-sm text-zinc-200 mt-2">
+                            <Link to={`/main-app/${userId}/user-projects/${projectId}/members`}>
+                                Click Here to get more member details
+                            </Link>
+
+                        </ItemContent>
                     </CardContent>
                 </Card>
                 <Card>

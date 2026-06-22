@@ -24,3 +24,23 @@ export const deleteProject = async (projectId) => {
     const response = await api.delete(`/projects/${projectId}`)
     return response
 }
+
+export const getProjectMembers = async (projectId) => {
+    const response = await api.get(`/projects/${projectId}/members`)
+    return response
+}
+
+export const deleteProjectMember = async (projectId, userId) => {
+    const response = await api.delete(`/projects/${projectId}/members/${userId}`)
+    return response
+}
+
+export const addProjectMember = async (projectId, formData) => {
+    const response = await api.post(`/projects/${projectId}/members`, formData)
+    return response
+}
+
+export const updateMemberRole = async (projectId, userId, formData) => {
+    const response = await api.put(`/projects/${projectId}/members/${userId}`, formData)
+    return response
+}
