@@ -28,7 +28,7 @@ import { addProjectMember } from '@/services/projects';
 import { displayNotification } from '@/utils/toastmessage';
 import { useParams } from 'react-router-dom';
 
-function AddMemberModal() {
+function AddMemberModal({ setMembers }) {
     const { projectId } = useParams()
     const [formData, setFormData] = useState({ email: "", role: "" })
 
@@ -37,7 +37,15 @@ function AddMemberModal() {
         try {
             console.log(formData)
             const res = await displayNotification(addProjectMember(projectId, formData))
-            console.log(res)
+            console.log(res?.data)
+            const json = res?.data
+            setMembers((prev) => [...prev, {
+                _id: json.data._id,
+                avatar: json.data.avatar.url,
+                role: formData.role,
+                email: json.data.email,
+                name: json.data.username
+            }])
             setFormData({ email: "", role: "" })
         } catch (error) {
             console.log(error)

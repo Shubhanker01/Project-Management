@@ -173,7 +173,7 @@ const addMemberToProject = asyncHandler(async (req, res) => {
     const { email, role } = req.body
     const { projectId } = req.params
     const project = await Project.findById(projectId)
-    const user = await User.findOne({ email: email })
+    const user = await User.findOne({ email: email }).select("-password -refreshToken -accessToken -isEmailVerified -emailVerificationExpiry -emailVerificationToken")
     if (!project || !user) {
         throw new ApiError(404, "Some Document Not Found")
     }
@@ -184,7 +184,7 @@ const addMemberToProject = asyncHandler(async (req, res) => {
         role: role
     })
     return res.status(201).json(
-        new ApiResponse(201, {}, "User successfully added or updated")
+        new ApiResponse(201, user, "User successfully added or updated")
     )
 })
 

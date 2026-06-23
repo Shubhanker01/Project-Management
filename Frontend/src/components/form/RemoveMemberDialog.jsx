@@ -16,12 +16,15 @@ import { displayNotification } from '@/utils/toastmessage';
 import { deleteProjectMember } from '@/services/projects';
 import { useParams } from 'react-router-dom';
 
-function RemoveMemberDialog({ name, userId }) {
+function RemoveMemberDialog({ name, userId, setMembers, member }) {
     const { projectId } = useParams()
     const handleRemove = async () => {
         try {
-            const res = await displayNotification(deleteProjectMember(projectId, userId))
-            console.log(res)
+            const res = await displayNotification(deleteProjectMember(projectId, member._id))
+            setMembers((prev) => {
+                return prev.filter((user) => user._id !== member._id)
+            }
+            )
         } catch (error) {
             console.log(error)
         }
@@ -45,7 +48,7 @@ function RemoveMemberDialog({ name, userId }) {
                         <AlertDialogDescription className="text-slate-400">
                             Are you sure you want to Remove{" "}
                             <span className="font-semibold text-slate-200">
-                                {name}
+                                {member.name}
                             </span>
                             ?
                             <br />

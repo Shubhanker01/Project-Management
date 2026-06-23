@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import RemoveMemberDialog from "./form/RemoveMemberDialog"
 import UpdateRoleModal from './form/UpdateRoleModal';
 
-function MemberCard({ member }) {
+function MemberCard({ member, setMembers }) {
     return (
         <div>
             <Card className="bg-slate-900 border-slate-800 w-1/2">
@@ -42,8 +42,8 @@ function MemberCard({ member }) {
                         </div>
 
                         <div className="flex gap-2">
-                            <UpdateRoleModal member={member} />
-                            <RemoveMemberDialog name={member.name} userId={member._id} />
+                            <UpdateRoleModal member={member} setMembers={setMembers} />
+                            <RemoveMemberDialog setMembers={setMembers} member={member} />
                         </div>
 
                     </div>

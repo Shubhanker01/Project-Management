@@ -26,14 +26,22 @@ import { displayNotification } from '@/utils/toastmessage';
 import { useParams } from 'react-router-dom';
 
 
-function UpdateRoleModal({ member }) {
+function UpdateRoleModal({ member, setMembers }) {
     const { projectId } = useParams()
     const [formData, setFormData] = useState({ newRole: "" })
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
             const res = await displayNotification(updateMemberRole(projectId, member._id, formData))
-            console.log(res)
+            setMembers((prev) => {
+                return prev.map((user) => {
+                    if (user._id === member._id) {
+                        user.role = formData.newRole
+                    }
+                    return user
+                })
+            })
+
         } catch (error) {
             console.log(error)
         }
@@ -42,11 +50,12 @@ function UpdateRoleModal({ member }) {
     const handleRoleChange = (value) => {
         setFormData((prev) => ({
             ...prev,
-            role: value
+            newRole: value
         }))
     }
     return (
         <div>
+            {console.log(formData)}
             <Dialog>
                 <DialogTrigger asChild>
                     <Button className='cursor-pointer'>

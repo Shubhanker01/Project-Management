@@ -42,7 +42,7 @@ function TeamMemberDetails() {
                     <h1 className="text-3xl font-bold">
                         Team Members
                     </h1>
-                    <AddMemberModal />
+                    <AddMemberModal setMembers={setMembers} />
                 </div>
 
                 <div className="space-y-4">
@@ -50,6 +50,7 @@ function TeamMemberDetails() {
                         <MemberCard
                             key={member._id}
                             member={member}
+                            setMembers={setMembers}
                         />
                     ))}
                 </div>

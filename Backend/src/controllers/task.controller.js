@@ -8,6 +8,7 @@ import mongoose from 'mongoose'
 import { UserRolesEnum } from '../utils/constants.js'
 import { Task } from '../models/task.model.js'
 import { SubTask } from '../models/subtask.model.js'
+import { uploadToS3 } from '../utils/uploadToS3.js'
 
 const getTasks = asyncHandler(async (req, res) => {
     const { projectId } = req.params
@@ -103,19 +104,18 @@ const getTaskById = asyncHandler(async (req, res) => {
 const createTask = asyncHandler(async (req, res) => {
     const { title, description, status, assignedTo } = req.body
     const { projectId } = req.params
-
     const project = await Project.findById(projectId)
     if (!project) {
         throw new ApiError(404, "Project Not Found")
     }
-    const files = req.files || []
-    files = files.map((file) => {
+    let files = req.files.attachments || []
+    files = await Promise.all(files.map(async (file) => {
+        const url = await uploadToS3(file.path, file.originalname)
         return {
-            url: `${process.env.SERVER_URL}/images/${file.originalname}`,
-            mimeType: file.mimeType,
+            url: url,
             size: file.size
         }
-    })
+    }))
     const task = await Task.create({
         title: title,
         description: description,
@@ -139,7 +139,7 @@ const updateTask = asyncHandler(async (req, res) => {
     const { projectId, taskId } = req.params
     const { title, description, status } = req.body
 
-    const task = await Task.findById(taskId)
+    let task = await Task.findById(taskId)
     if (!task) {
         throw new ApiError(404, "Task not found")
     }
