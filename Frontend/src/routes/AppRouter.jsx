@@ -13,6 +13,7 @@ import Tasks from '../pages/Tasks'
 import Dashboard from '../pages/Dashboard'
 import Project from '@/pages/Project'
 import TeamMemberDetails from '@/pages/TeamMemberDetails'
+import ProjectTasks from '@/pages/ProjectTasks'
 
 function AppRouter() {
     return (
@@ -29,7 +30,8 @@ function AppRouter() {
                     <Route path='user-projects' element={<UserProjects />} >
                     </Route>
                     <Route path='user-projects/:projectId' element={<Project />}></Route>
-                    <Route path='user-projects/:projectId/members' element={<TeamMemberDetails/>}/>
+                    <Route path='user-projects/:projectId/members' element={<TeamMemberDetails />} />
+                    <Route path='user-projects/:projectId/tasks' element={<ProjectTasks />} />
                     <Route path='settings' element={<Settings />} />
                     <Route path='tasks' element={<Tasks />}></Route>
                 </Route>

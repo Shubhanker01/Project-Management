@@ -12,12 +12,15 @@ import {
 } from "@/components/ui/tooltip"
 
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { getProject } from "@/services/projects";
 import { Link, useParams } from "react-router-dom";
 import UpdateProjectModal from "@/components/form/UpdateProjectForm";
 import DeleteProjectDialog from "@/components/form/DeleteProjectForm";
 import { ItemContent } from "@/components/ui/item";
+import { ArrowRight } from "lucide-react";
+import AssignTaskDialog from "@/components/form/AssignTaskDialog";
 
 export default function Project() {
     const [project, setProject] = useState({
@@ -137,15 +140,22 @@ export default function Project() {
                         </ItemContent>
                     </CardContent>
                 </Card>
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Recent Tasks</CardTitle>
-                    </CardHeader>
+                <div className="flex">
+                    <AssignTaskDialog members={project.members} />
+                    <Button
+                        asChild
+                        className="bg-indigo-600
+    hover:bg-indigo-500 transition-all duration-200 w-32 m-4"
+                    >
+                        <Link
+                            to={`/main-app/${userId}/user-projects/${projectId}/tasks`}
+                        >
+                            View Tasks
+                            <ArrowRight className="h-4 w-4 ml-2" />
+                        </Link>
+                    </Button>
+                </div>
 
-                    <CardContent>
-                        {/* tasks */}
-                    </CardContent>
-                </Card>
             </Card>
 
         </div>

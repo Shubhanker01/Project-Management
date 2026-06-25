@@ -4,7 +4,8 @@ import { s3Client } from "./s3.js";
 
 export const uploadToS3 = async (filePath, originalName) => {
     const fileStream = fs.createReadStream(filePath)
-    const key = `tasks/${Date.now()}-${originalName}`
+    let str = originalName.split(" ").join("")
+    const key = `tasks/${Date.now()}-${str}`
     const command = new PutObjectCommand({
         Bucket: process.env.AWS_BUCKET,
         Key: key,
@@ -15,7 +16,9 @@ export const uploadToS3 = async (filePath, originalName) => {
         fs.unlinkSync(filePath)
         const fileUrl =
             `https://${process.env.AWS_BUCKET}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
+        
         return fileUrl
     }
-
+    fs.unlinkSync(filePath)
+    return null
 }
