@@ -6,7 +6,6 @@ import {
 } from "@/components/ui/card";
 
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 
 import {
     User,
@@ -16,10 +15,11 @@ import {
     CheckCircle2,
 } from "lucide-react";
 
+import UpdateTaskModal from "./form/UpdateTaskModal";
+import DeleteTaskModal from "./form/DeleteTaskModal";
 export default function TaskCard({
     task,
-    onUpdate,
-    onDelete,
+    setTasks
 }) {
     const getStatusBadge = () => {
         switch (task.status) {
@@ -27,19 +27,19 @@ export default function TaskCard({
                 return (
                     <Badge
                         variant="outline"
-                        className="flex items-center gap-1"
+                        className="flex items-center gap-1 w-32 text-sm text-slate-100"
                     >
-                        <Circle className="h-3 w-3" />
+                        <Circle className="h-4 w-4" />
                         Todo
                     </Badge>
                 );
 
-            case "progress":
+            case "in_progress":
                 return (
                     <Badge
-                        className="bg-amber-600 flex items-center gap-1"
+                        className="bg-amber-600 flex items-center gap-1 w-32 text-sm"
                     >
-                        <Clock3 className="h-3 w-3" />
+                        <Clock3 className="h-4 w-4" />
                         In Progress
                     </Badge>
                 );
@@ -47,9 +47,9 @@ export default function TaskCard({
             case "done":
                 return (
                     <Badge
-                        className="bg-emerald-600 flex items-center gap-1"
+                        className="bg-emerald-600 flex items-center gap-1 w-32 text-sm"
                     >
-                        <CheckCircle2 className="h-3 w-3" />
+                        <CheckCircle2 className="h-4 w-4" />
                         Completed
                     </Badge>
                 );
@@ -129,20 +129,8 @@ export default function TaskCard({
 
                 {/* Actions */}
                 <div className="flex gap-3 pt-2">
-                    <Button
-                        onClick={onUpdate}
-                        className="flex-1"
-                    >
-                        Update Task
-                    </Button>
-
-                    <Button
-                        variant="destructive"
-                        onClick={onDelete}
-                        className="flex-1"
-                    >
-                        Remove Task
-                    </Button>
+                    <UpdateTaskModal task={task} setTasks={setTasks} />
+                    <DeleteTaskModal task={task} setTasks={setTasks} />
                 </div>
 
             </CardContent>

@@ -2,21 +2,23 @@ import React, { useState } from 'react'
 import { login } from '../services/auth'
 import { displayNotification } from '../utils/toastmessage'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/provider/AuthProvider'
 
 function Login() {
     const [data, setData] = useState({ email: "", password: "" })
+    const { setUser } = useAuth()
     const navigate = useNavigate()
 
     const formSubmit = async (e) => {
         try {
             e.preventDefault()
-            const json = await displayNotification(login(data))
-            console.log(json?.data)
+            const res = await displayNotification(login(data))
+            const json = res?.data
             setData({ ...data, email: "", password: "" })
             if (json.data) {
-                navigate(`/main-app/${json?.data?.data?._id}`)
+                navigate(`/main-app/${json?.data?._id}`)
+                setUser(json?.data)
             }
-
         } catch (error) {
             console.log(error)
         }

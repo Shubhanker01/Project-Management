@@ -124,8 +124,15 @@ const logout = asyncHandler(async (req, res) => {
 
 // get current user
 const getCurrentUser = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id).select(
+        "-password -refreshToken -emailVerificationToken -emailVerificationExpiry"
+    )
+    if (!user) {
+        throw new ApiError(500, "Something went wrong while fetching the user data!!!")
+    }
+
     return res.status(200).json(
-        new ApiResponse(200, req.user, "Data fetched successfully")
+        new ApiResponse(200, user, "Data fetched successfully")
     )
 })
 
@@ -282,4 +289,4 @@ const changeCurrentPassword = asyncHandler(async (req, res) => {
 
 
 
-export { registerUser, login, logout, getCurrentUser, verifyEmail, resendEmailVerification, refreshAccessToken, forgotPassword, changePassword,changeCurrentPassword }
+export { registerUser, login, logout, getCurrentUser, verifyEmail, resendEmailVerification, refreshAccessToken, forgotPassword, changePassword, changeCurrentPassword }

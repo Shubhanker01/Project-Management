@@ -158,7 +158,7 @@ const updateTask = asyncHandler(async (req, res) => {
 
 const deleteTask = asyncHandler(async (req, res) => {
     const { projectId, taskId } = req.params
-    const task = await Task.findById(new mongoose.Types.ObjectId(taskId))
+    let task = await Task.findById(new mongoose.Types.ObjectId(taskId))
 
     if (!task) {
         throw new ApiError(404, "Task not found")
