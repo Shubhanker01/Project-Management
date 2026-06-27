@@ -1,17 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react'
-import AuthContext from '@/context/AuthContext'
-import { getCurrentUser } from '@/services/auth'
+import React, { useContext, useState } from 'react'
+import AuthContext from '../context/AuthContext'
 
 function AuthProvider({ children }) {
-    const [user, setUser] = useState(null)
-    // useEffect(() => {
-    //     const fetchUser = async () => {
-    //         const res = await getCurrentUser()
-    //         const json = res?.data
-    //         setUser(json?.data)
-    //     }
-    //     fetchUser()
-    // }, [])
+    const [user, setUser] = useState(() => {
+        const stored = sessionStorage.getItem('user')
+        return stored ? JSON.parse(stored) : null
+    })
     return (
         <AuthContext.Provider value={{ user, setUser }}>
             {children}

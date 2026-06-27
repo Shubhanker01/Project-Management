@@ -4,7 +4,7 @@ import { createProjectValidator, addMemberToProjectValidator } from "../validato
 import { verifyJwt, validateProjectPermission } from "../middlewares/auth.middleware.js"
 import { AvailableUserRoles, UserRolesEnum } from "../utils/constants.js"
 import { upload } from "../middlewares/multer.middleware.js"
-import { createTask, getTasks, updateTask, deleteTask, getTaskById } from "../controllers/task.controller.js"
+import { createTask, getTasks, updateTask, deleteTask, getTaskById, assignedTasks } from "../controllers/task.controller.js"
 
 
 const router = Router()
@@ -19,5 +19,6 @@ router.route("/:projectId/task/:taskId")
     .delete(deleteTask)
 
 router.route("/:taskId").get(getTaskById)
+router.route("/assigned/:userId").get(assignedTasks)
 
 export default router

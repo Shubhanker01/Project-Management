@@ -23,3 +23,8 @@ export const updateTask = async (projectId, taskId, taskData) => {
     const response = await api.post(`/tasks/${projectId}/task/${taskId}`, taskData)
     return response
 }
+
+export const getTasksAssigned = async (userId) => {
+    const response = await api.get(`/tasks/assigned/${userId}`)
+    return response
+}

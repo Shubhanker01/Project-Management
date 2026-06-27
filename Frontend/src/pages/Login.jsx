@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { login } from '../services/auth'
 import { displayNotification } from '../utils/toastmessage'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '@/provider/AuthProvider'
+import { useAuth } from '../provider/AuthProvider'
 
 function Login() {
     const [data, setData] = useState({ email: "", password: "" })
@@ -17,6 +17,7 @@ function Login() {
             setData({ ...data, email: "", password: "" })
             if (json.data) {
                 navigate(`/main-app/${json?.data?._id}`)
+                sessionStorage.setItem('user', JSON.stringify(json?.data))
                 setUser(json?.data)
             }
         } catch (error) {

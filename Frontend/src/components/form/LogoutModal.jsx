@@ -24,6 +24,7 @@ function LogoutModal() {
             console.log(logoutUser)
             if (logoutUser) {
                 navigate(`/`)
+                sessionStorage.clear()
             }
         } catch (error) {
             console.log(error)
@@ -34,7 +35,7 @@ function LogoutModal() {
         <div>
             <AlertDialog>
                 <AlertDialogTrigger asChild>
-                    <Button variant="destructive" className="cursor-pointer">
+                    <Button variant="destructive" className="cursor-pointer w-full bg-red-700 text-slate-100">
                         Logout
                     </Button>
                 </AlertDialogTrigger>

@@ -101,6 +101,34 @@ const getTaskById = asyncHandler(async (req, res) => {
 
 })
 
+const assignedTasks = asyncHandler(async (req, res) => {
+    const { userId } = req.params
+    const tasks = await Task.aggregate([
+        {
+            $match: {
+                assignedTo: new mongoose.Types.ObjectId(userId)
+            }
+        },
+        {
+            $lookup: {
+                from: "projects",
+                localField: "project",
+                foreignField: "_id",
+                as: "projectDetails"
+            }
+        },
+        {
+            $unwind: "$projectDetails"
+        }
+    ])
+    if (!tasks) {
+        throw new ApiError(404, "Tasks not found")
+    }
+    return res.status(200).json(
+        new ApiResponse(200, tasks, "Task fetched successfully")
+    )
+})
+
 const createTask = asyncHandler(async (req, res) => {
     const { title, description, status, assignedTo } = req.body
     const { projectId } = req.params
@@ -190,7 +218,8 @@ export {
     deleteTask,
     createSubTask,
     updateSubTask,
-    deleteSubTask
+    deleteSubTask,
+    assignedTasks
 }
 
 

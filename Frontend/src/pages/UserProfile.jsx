@@ -11,24 +11,13 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar";
 
-import { Button } from "@/components/ui/button";
-
-import { User, Mail, LogOut } from "lucide-react";
+import { User, Mail } from "lucide-react";
 import LogoutModal from "@/components/form/LogoutModal";
-import { useAuth } from "@/provider/AuthProvider";
-import { useEffect } from "react";
+import { useAuth } from "../provider/AuthProvider";
 
 export default function UserProfile() {
   const { user } = useAuth()
-  // useEffect(() => {
-  //   const entries = performance.getEntriesByType('navigation')
-  //   if (entries.length > 0) {
-  //     const navigationType = entries[0].entryType
-  //     if (navigationType === 'reload') {
-  //       console.log("The page was reloaded")
-  //     }
-  //   }
-  // }, [])
+
   return (
     <div className="max-w-xl mx-auto px-6 py-8">
 
@@ -37,19 +26,19 @@ export default function UserProfile() {
         <CardHeader className="flex flex-col items-center space-y-4">
 
           <Avatar className="h-28 w-28 border-4 border-indigo-500">
-            <AvatarImage src={"https://placehold.co/600x400"} />
-            <AvatarFallback className="text-3xl">
-              my username
+            <AvatarImage src={user.avatar.url} />
+            <AvatarFallback className="text-3xl text-slate-100">
+              {user.username || "name"}
             </AvatarFallback>
           </Avatar>
 
           <div className="text-center">
-            <CardTitle className="text-2xl">
-              Shub
+            <CardTitle className="text-2xl text-slate-100">
+              {user.username}
             </CardTitle>
 
             <p className="text-slate-400">
-              gmail.com
+              {user.email}
             </p>
           </div>
 
@@ -67,8 +56,8 @@ export default function UserProfile() {
                   Username
                 </p>
 
-                <p className="font-medium">
-                  my name
+                <p className="font-medium text-slate-200">
+                  {user.username}
                 </p>
               </div>
 
@@ -87,8 +76,8 @@ export default function UserProfile() {
                   Email
                 </p>
 
-                <p className="font-medium">
-                  My Email
+                <p className="font-medium text-slate-200">
+                  {user.email}
                 </p>
               </div>
 
