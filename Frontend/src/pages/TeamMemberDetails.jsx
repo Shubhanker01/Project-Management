@@ -45,7 +45,7 @@ function TeamMemberDetails() {
                     <AddMemberModal setMembers={setMembers} />
                 </div>
 
-                <div className="space-y-4">
+                <div className="m-2">
                     {members.map((member) => (
                         <MemberCard
                             key={member._id}

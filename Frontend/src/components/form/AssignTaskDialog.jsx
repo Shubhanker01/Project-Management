@@ -25,9 +25,11 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import { useParams } from "react-router-dom";
+import { useAuth } from "@/provider/AuthProvider";
 
 export default function AssignTaskDialog({ members }) {
-    const {projectId} = useParams()
+    const { user } = useAuth()
+    const { projectId } = useParams()
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -57,8 +59,8 @@ export default function AssignTaskDialog({ members }) {
         files.forEach((file) => {
             taskData.append("attachments", file);
         });
-        
-        const res = await displayNotification(createTask(projectId,taskData))
+
+        const res = await displayNotification(createTask(projectId, taskData))
         console.log(res)
 
     };
@@ -149,7 +151,7 @@ export default function AssignTaskDialog({ members }) {
                                                 key={member._id}
                                                 value={member._id}
                                             >
-                                                {member.email}
+                                                {member.email === user.email ? `${member.email}(You)` : member.email}
                                             </SelectItem>
                                         ))}
                                     </SelectGroup>

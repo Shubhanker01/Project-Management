@@ -13,60 +13,138 @@ import {
     FolderKanban,
     CheckSquare,
     Settings,
+    Workflow
 } from "lucide-react";
-import NavItem from "./NavItem"
-import { NavLink } from 'react-router-dom'
+
+import { NavLink } from "react-router-dom";
+
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { useSidebar } from "@/components/ui/sidebar";
+
+const menuItems = [
+    {
+        title: "Home",
+        icon: Home,
+        path: "",
+    },
+    {
+        title: "User Profile",
+        icon: User,
+        path: "user-profile",
+    },
+    {
+        title: "Your Projects",
+        icon: FolderKanban,
+        path: "user-projects",
+    },
+    {
+        title: "Tasks",
+        icon: CheckSquare,
+        path: "tasks",
+    },
+    {
+        title: "Settings",
+        icon: Settings,
+        path: "settings",
+    },
+];
 
 export default function Navbar({ userId }) {
+    const { state } = useSidebar();
+
+    const isCollapsed = state === "collapsed";
     return (
-        <aside className="h-screen w-64 bg-zinc-950 border-r border-zinc-800 text-zinc-200 flex flex-col">
+        <Sidebar variant="sidebar" collapsible="icon" className="bg-slate-800 text-slate-200">
+            <SidebarHeader className="border-b border-zinc-800">
 
-            {/* Logo / Brand */}
-            <div className="px-6 py-5 border-b border-zinc-800">
-                <h1 className="text-xl font-semibold tracking-tight text-white">
-                    ProjectFlow
-                </h1>
-                <p className="text-xs text-zinc-500 mt-1">
-                    Manage everything in one place
-                </p>
-            </div>
+                <Workflow className="h-7 w-7 text-indigo-500 shrink-0" />
 
-            {/* Navigation */}
-            <nav className="flex-1 px-3 py-4 space-y-1">
+                {!isCollapsed && (
+                    <div className={`overflow-hidden transition-all duration-300 ${isCollapsed ? "w-0 opacity-0" : "w-auto opacity-100"
+                        }`}>
+                        <h2 className="text-xl font-bold">
+                            ProjectFlow
+                        </h2>
 
-                <NavLink to={`/main-app/${userId}`} className={({ isActive }) =>
-                    isActive ? "text-blue-400" : ""
-                } end>
-                    <NavItem icon={<Home size={18} />} label="Home" />
-                </NavLink>
-                <NavLink to={`/main-app/${userId}/user-profile`} className={({ isActive }) =>
-                    isActive ? "text-blue-400" : ""
-                }>
-                    <NavItem icon={<User size={18} />} label="User Profile" />
-                </NavLink>
-                <NavLink to={`/main-app/${userId}/user-projects`} className={({ isActive }) =>
-                    isActive ? "text-blue-400" : ""
-                }>
-                    <NavItem icon={<FolderKanban size={18} />} label="Your Projects" />
-                </NavLink>
-                <NavLink to={`/main-app/${userId}/tasks`} className={({ isActive }) =>
-                    isActive ? "text-blue-400" : ""
-                }>
-                    <NavItem icon={<CheckSquare size={18} />} label="Tasks" />
-                </NavLink>
-                <NavLink to={`/main-app/${userId}/settings`} className={({ isActive }) =>
-                    isActive ? "text-blue-400" : ""
-                }>
-                    <NavItem icon={<Settings size={18} />} label="Settings" />
-                </NavLink>
+                        <p className="text-xs text-muted-foreground">
+                            Manage everything in one place
+                        </p>
+                    </div>
+                )}
 
-            </nav>
+            </SidebarHeader>
 
-            {/* Footer */}
-            <div className="px-4 py-3 border-t border-zinc-800 text-xs text-zinc-500">
-                v1.0.0 • Dark Mode
-            </div>
-        </aside>
+            <SidebarContent>
+
+                <SidebarGroup>
+
+                    <SidebarGroupLabel>
+                        Navigation
+                    </SidebarGroupLabel>
+
+                    <SidebarGroupContent>
+
+                        <SidebarMenu>
+
+                            {menuItems.map((item) => {
+
+                                const to =
+                                    item.path === ""
+                                        ? `/main-app/${userId}`
+                                        : `/main-app/${userId}/${item.path}`;
+
+                                return (
+                                    <SidebarMenuItem key={item.title}>
+
+                                        <SidebarMenuButton asChild>
+
+                                            <NavLink
+                                                to={to}
+                                                end={item.path === ""}
+                                                className={({ isActive }) =>
+                                                    isActive
+                                                        ? "bg-indigo-600 text-white rounded-md"
+                                                        : ""
+                                                }
+                                            >
+                                                <item.icon size={18} />
+                                                <span>{item.title}</span>
+                                            </NavLink>
+
+                                        </SidebarMenuButton>
+
+                                    </SidebarMenuItem>
+                                );
+                            })}
+
+                        </SidebarMenu>
+
+                    </SidebarGroupContent>
+
+                </SidebarGroup>
+
+            </SidebarContent>
+
+            <SidebarFooter className="border-t border-zinc-800">
+
+                <div className="text-xs text-muted-foreground px-2 py-2">
+                    v1.0.0 • Dark Mode
+                </div>
+
+            </SidebarFooter>
+
+        </Sidebar>
     );
 }
 

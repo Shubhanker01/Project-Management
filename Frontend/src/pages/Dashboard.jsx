@@ -1,16 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
 import { Progress } from '../components/ui/progress'
 import { Field, FieldLabel } from '@/components/ui/field'
 import { Item, ItemTitle, ItemContent, ItemDescription } from '@/components/ui/item'
-import { Avatar, AvatarFallback, AvatarGroup, AvatarImage, AvatarGroupCount } from '@/components/ui/avatar'
+import { getSummary } from '../services/dashboard'
 
 function Dashboard() {
-  const projects = [
-    { "id": 1, name: "project 1", description: "Random description" },
-    { "id": 2, name: "project 2", description: "Random description" },
-    { "id": 3, name: "project 3", description: "Random description" },
-  ]
+  const [summary, setSummary] = useState({
+    _id: "",
+    totalProjects: 0,
+    userProjects: [],
+    totalTasks: 0,
+    completedTasks: 0
+  })
+  function percCalculate() {
+    const calc = Math.round((summary.completedTasks / summary.totalTasks) * 100)
+    if (Number.isNaN(calc)) return 0
+    return calc
+  }
+  useEffect(() => {
+    async function fetchSummary() {
+      try {
+        const res = await getSummary()
+        const json = await res.data
+        setSummary({ ...summary, _id: json.data[0]._id, totalProjects: json.data[0].totalProjects, userProjects: json.data[0].userProjects, totalTasks: json.data[0].totalTasks, completedTasks: json.data[0].completedTasks })
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    fetchSummary()
+  }, [])
+
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -19,16 +39,7 @@ function Dashboard() {
             <CardTitle>Total Projects</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">12</p>
-          </CardContent>
-        </Card>
-
-        <Card className="m-2 bg-slate-800 text-slate-100 cursor-pointer">
-          <CardHeader>
-            <CardTitle>Total Tasks</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-xl font-bold">15</p>
+            <p className="text-2xl font-bold">{summary.totalProjects}</p>
           </CardContent>
         </Card>
 
@@ -37,7 +48,16 @@ function Dashboard() {
             <CardTitle>My Tasks</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-bold">10</p>
+            <p className="text-xl font-bold">{summary.totalTasks}</p>
+          </CardContent>
+        </Card>
+
+        <Card className="m-2 bg-slate-800 text-slate-100 cursor-pointer">
+          <CardHeader>
+            <CardTitle>Tasks Completed</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-xl font-bold">{summary.completedTasks}</p>
           </CardContent>
         </Card>
       </div>
@@ -51,9 +71,9 @@ function Dashboard() {
             <Field className="w-full max-w-sm">
               <FieldLabel htmlFor="progress-upload">
                 <span>Progress</span>
-                <span className="ml-auto">66%</span>
+                <span className="ml-auto">{percCalculate()}%</span>
               </FieldLabel>
-              <Progress value={66} id="progress-upload" />
+              <Progress value={percCalculate()} id="progress-upload" />
             </Field>
           </CardContent>
         </Card>
@@ -66,7 +86,7 @@ function Dashboard() {
           </CardHeader>
           <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {
-              projects.map((project) => {
+              summary.userProjects.map((project) => {
                 return (
                   <div id={project.id}>
                     <Item className="bg-gray-700 text-slate-100 mb-4 grid grid-cols-1">
@@ -76,22 +96,7 @@ function Dashboard() {
                           <ItemDescription className="text-slate-200">{project.description}</ItemDescription>
                         </ItemContent>
                       </div>
-                      <div>
-                        <ItemTitle className="text-sm">Team Members</ItemTitle>
-                        <AvatarGroup className="m-2">
-                          <Avatar>
-                            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                            <AvatarFallback>CN</AvatarFallback>
-                          </Avatar>
-                          <Avatar>
-                            <AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
-                            <AvatarFallback>LR</AvatarFallback>
-                          </Avatar>
-                          <AvatarGroupCount>
-                            <span className="text-sm">+2</span>
-                          </AvatarGroupCount>
-                        </AvatarGroup>
-                      </div>
+
                     </Item>
 
                   </div>

@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser'
 import verifyEmailRouter from './routes/emailverify.route.js'
 import ProjectRouter from './routes/project.route.js'
 import TaskRouter from './routes/task.route.js'
+import DashboardRouter from './routes/dashboard.route.js'
 
 const app = express()
 
@@ -32,6 +33,8 @@ app.use('/api/v1/projects', ProjectRouter)
 // task router
 app.use('/api/v1/tasks', TaskRouter)
 
+// dashboard router
+app.use('/api/v1/dashboard', DashboardRouter)
 
 app.get('/', (req, res) => {
     res.send("Hello everyone")

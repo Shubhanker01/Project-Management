@@ -27,7 +27,9 @@ export default function Project() {
         name: "",
         description: "",
         totalMembers: 0,
-        members: []
+        members: [],
+        totalTasks: 0,
+        completedTasks: 0
     })
     const { projectId, userId } = useParams()
     useEffect(() => {
@@ -36,7 +38,7 @@ export default function Project() {
                 const json = await getProject(projectId)
                 const res = await json.data
                 console.log(res)
-                setProject({ ...project, name: res?.data[0]?.name, description: res?.data[0]?.description, totalMembers: res?.data[0]?.totalMembers, members: res?.data[0].userDetails })
+                setProject({ ...project, name: res?.data[0]?.name, description: res?.data[0]?.description, totalMembers: res?.data[0]?.totalMembers, members: res?.data[0].userDetails, totalTasks: res?.data[0].totalTasks, completedTasks: res?.data[0].completedTasks })
             } catch (error) {
                 console.log(error)
             }
@@ -78,7 +80,7 @@ export default function Project() {
                                 Total Tasks
                             </p>
                             <p className="text-2xl font-bold">
-                                24
+                                {project.totalTasks}
                             </p>
                         </div>
 
@@ -87,7 +89,7 @@ export default function Project() {
                                 Completed
                             </p>
                             <p className="text-2xl font-bold">
-                                18
+                                {project.completedTasks}
                             </p>
                         </div>
                     </div>
@@ -115,23 +117,26 @@ export default function Project() {
                     </CardHeader>
 
                     <CardContent>
-                        {
-                            project.members.map((user) => {
-                                return <div key={user._id}>
-                                    <Avatar className="cursor-pointer">
-                                        <Tooltip>
-                                            <TooltipTrigger>
-                                                <AvatarImage src={`${user.avatar.url}`}></AvatarImage>
-                                            </TooltipTrigger>
-                                            <TooltipContent>
-                                                <p>{user.username}</p>
-                                            </TooltipContent>
-                                        </Tooltip>
+                        <ItemContent className="grid grid-cols-14 gap-0.5">
+                            {
+                                project.members.map((user) => {
+                                    return <div key={user._id}>
+                                        <Avatar className="cursor-pointer">
+                                            <Tooltip>
+                                                <TooltipTrigger>
+                                                    <AvatarImage src={`${user.avatar.url}`}></AvatarImage>
+                                                </TooltipTrigger>
+                                                <TooltipContent>
+                                                    <p>{user.username}</p>
+                                                </TooltipContent>
+                                            </Tooltip>
 
-                                    </Avatar>
-                                </div>
-                            })
-                        }
+                                        </Avatar>
+                                    </div>
+                                })
+                            }
+                        </ItemContent>
+
                         <ItemContent className="text-sm text-zinc-200 mt-2">
                             <Link to={`/main-app/${userId}/user-projects/${projectId}/members`}>
                                 Click Here to get more member details

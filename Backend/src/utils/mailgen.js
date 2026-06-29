@@ -15,11 +15,11 @@ const sendEmail = async (options) => {
     const emailHtml = mailGenerator.generate(options.mailgenContent)
 
     const transport = nodemailer.createTransport({
-        host: process.env.MAILTRAP_SMPT_HOST,
-        port: process.env.MAILTRAP_SMPT_PORT,
+        host: process.env.BREVO_HOST,
+        port: process.env.BREVO_PORT,
         auth: {
-            user: process.env.MAILTRAP_SMPT_USER,
-            pass: process.env.MAILTRAP_SMPT_PASS
+            user: process.env.BREVO_LOGIN,
+            pass: process.env.BREVO_SMTP_KEY
         }
     });
 

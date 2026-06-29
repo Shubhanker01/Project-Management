@@ -160,6 +160,36 @@ const getProjectById = asyncHandler(async (req, res) => {
                 "userDetails.updatedAt": 0,
             },
         },
+        {
+            $lookup: {
+                from: "tasks",
+                localField: "_id",
+                foreignField: "project",
+                as: "tasks"
+            }
+        },
+        {
+            $addFields: {
+                totalTasks: {
+                    $size: "$tasks"
+                }
+            }
+        },
+        {
+            $addFields: {
+                completedTasks: {
+                    $size: {
+                        $filter: {
+                            input: "$tasks",
+                            as: "task",
+                            cond: {
+                                $eq: ["$$task.status", "done"]
+                            }
+                        }
+                    }
+                }
+            }
+        },
     ])
     if (!project) {
         throw new ApiError(404, "Project Not Found")

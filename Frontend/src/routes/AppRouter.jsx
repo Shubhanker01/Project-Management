@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import Home from '../pages/Home'
 import Login from '../pages/Login'
@@ -8,12 +8,13 @@ import EmailVerificationPage from '../pages/EmailVerificationPage'
 import MainApp from '../pages/MainApp'
 import Settings from '../pages/Settings'
 import UserProfile from '../pages/UserProfile'
-import UserProjects from '../pages/UserProjects'
 import Tasks from '../pages/Tasks'
-import Dashboard from '../pages/Dashboard'
 import Project from '@/pages/Project'
 import TeamMemberDetails from '@/pages/TeamMemberDetails'
 import ProjectTasks from '@/pages/ProjectTasks'
+import Loader from '../components/Loader'
+const Dashboard = lazy(() => import('../pages/Dashboard'))
+const UserProjects = lazy(() => import('../pages/UserProjects'))
 
 function AppRouter() {
     return (
@@ -25,9 +26,9 @@ function AppRouter() {
                 <Route path='/email-confirm' element={<EmailVerificationConfirm />}></Route>
                 <Route path='/email-verify/:token' element={<EmailVerificationPage />}></Route>
                 <Route path='/main-app/:userId' element={<MainApp />}>
-                    <Route index element={<Dashboard />}></Route>
+                    <Route index element={<Suspense fallback={<Loader />}><Dashboard /></Suspense>}></Route>
                     <Route path='user-profile' element={<UserProfile />} />
-                    <Route path='user-projects' element={<UserProjects />} >
+                    <Route path='user-projects' element={<Suspense fallback={<Loader />}><UserProjects /></Suspense>} >
                     </Route>
                     <Route path='user-projects/:projectId' element={<Project />}></Route>
                     <Route path='user-projects/:projectId/members' element={<TeamMemberDetails />} />

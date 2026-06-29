@@ -98,7 +98,9 @@ const login = asyncHandler(async (req, res) => {
     }
 
     const options = {
-        httpOnly: true
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none'
     }
     return res.status(200).cookie("accessToken", accessToken, options).cookie("refreshToken", refreshToken, options)
         .json(
@@ -117,7 +119,8 @@ const logout = asyncHandler(async (req, res) => {
     })
     const options = {
         httpOnly: true,
-        secure: true
+        secure: true,
+        sameSite: "none"
     }
     return res.status(200).clearCookie("accessToken", options).clearCookie("refreshToken", options).json(new ApiResponse(200, {}, "User logged out successfully"))
 })
@@ -210,7 +213,8 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
         }
         const options = {
             httpOnly: true,
-            secure: true
+            secure: true,
+            sameSite: "none"
         }
         const { accessToken, refreshToken } = await generateAccessandRefreshToken(user?._id)
         user.refreshToken = refreshToken
