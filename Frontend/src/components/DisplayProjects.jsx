@@ -26,9 +26,9 @@ function DisplayProjects({ userProjects, userId }) {
                             className="bg-zinc-900 border  border-zinc-800 hover:border-indigo-500 transition rounded-xl p-4 cursor-pointer"
                         >
                             <div className='flex flex-col'>
-                                <ItemTitle className="text-xl font-medium">{project.projects.name}</ItemTitle>
+                                <ItemTitle className="md:text-xl text-lg font-medium">{project.projects.name}</ItemTitle>
 
-                                <ItemContent className="text-lg text-zinc-400 mt-2">
+                                <ItemContent className="md:text-lg text-sm text-zinc-400 mt-2">
                                     {project.projects.description || "No Description"}
                                 </ItemContent>
                                 <ItemContent className="text-sm text-zinc-500 mt-2">

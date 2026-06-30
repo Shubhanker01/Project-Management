@@ -51,7 +51,7 @@ export default function Project() {
                 <CardHeader>
                     <div className="flex items-start justify-between">
                         <div>
-                            <CardTitle className="text-3xl">
+                            <CardTitle className="md:text-3xl text-lg">
                                 {project.name}
                             </CardTitle>
 
@@ -65,12 +65,12 @@ export default function Project() {
 
                 <CardContent className="space-y-8">
                     {/* Stats */}
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid md:grid-cols-3 grid-cols-1 gap-4">
                         <div className="bg-slate-800 rounded-lg p-4">
                             <p className="text-slate-400 text-sm">
                                 Members
                             </p>
-                            <p className="text-2xl font-bold">
+                            <p className="md:text-2xl text-sm font-bold">
                                 {project.totalMembers}
                             </p>
                         </div>
@@ -79,7 +79,7 @@ export default function Project() {
                             <p className="text-slate-400 text-sm">
                                 Total Tasks
                             </p>
-                            <p className="text-2xl font-bold">
+                            <p className="md:text-2xl text-sm font-bold">
                                 {project.totalTasks}
                             </p>
                         </div>
@@ -88,7 +88,7 @@ export default function Project() {
                             <p className="text-slate-400 text-sm">
                                 Completed
                             </p>
-                            <p className="text-2xl font-bold">
+                            <p className="md:text-2xl text-sm font-bold">
                                 {project.completedTasks}
                             </p>
                         </div>
@@ -106,18 +106,18 @@ export default function Project() {
                     </div>
 
                     {/* Actions */}
-                    <div className="flex gap-4">
+                    <div className="flex flex-col md:flex-row gap-4">
                         <UpdateProjectModal project={project} />
                         <DeleteProjectDialog projectName={project.name} />
                     </div>
                 </CardContent>
-                <Card className="bg-slate-800 border-slate-800 text-slate-100 w-[80%] m-4">
+                <Card className="bg-slate-800 border-slate-800 text-slate-100 md:w-[80%] w-[90%] m-4">
                     <CardHeader>
                         <CardTitle>Team Members</CardTitle>
                     </CardHeader>
 
                     <CardContent>
-                        <ItemContent className="grid grid-cols-14 gap-0.5">
+                        <ItemContent className="grid grid-cols-4 md:grid-cols-14 gap-0.5">
                             {
                                 project.members.map((user) => {
                                     return <div key={user._id}>
@@ -145,20 +145,25 @@ export default function Project() {
                         </ItemContent>
                     </CardContent>
                 </Card>
-                <div className="flex">
-                    <AssignTaskDialog members={project.members} />
-                    <Button
-                        asChild
-                        className="bg-indigo-600
-    hover:bg-indigo-500 transition-all duration-200 w-32 m-4"
-                    >
-                        <Link
-                            to={`/main-app/${userId}/user-projects/${projectId}/tasks`}
+                <div className="flex flex-col md:flex-row">
+                    <div>
+                        <AssignTaskDialog members={project.members} />
+                    </div>
+                    <div>
+                        <Button
+                            asChild
+                            className="bg-indigo-600
+    hover:bg-indigo-500 transition-all duration-200 md:w-32 w-[90%] m-4"
                         >
-                            View Tasks
-                            <ArrowRight className="h-4 w-4 ml-2" />
-                        </Link>
-                    </Button>
+                            <Link
+                                to={`/main-app/${userId}/user-projects/${projectId}/tasks`}
+                            >
+                                View Tasks
+                                <ArrowRight className="h-4 w-4 ml-2" />
+                            </Link>
+                        </Button>
+                    </div>
+
                 </div>
 
             </Card>

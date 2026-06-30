@@ -68,7 +68,7 @@ export default function AssignTaskDialog({ members }) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button className="cursor-pointer w-32 m-4">
+                <Button className="cursor-pointer md:w-32 w-[90%] m-4">
                     <Plus className="mr-2 h-4 w-4" />
                     Assign Task
                 </Button>

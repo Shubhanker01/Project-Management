@@ -58,7 +58,7 @@ function UpdateRoleModal({ member, setMembers }) {
             {console.log(formData)}
             <Dialog>
                 <DialogTrigger asChild>
-                    <Button className='cursor-pointer'>
+                    <Button className='cursor-pointer text-sm'>
                         Update Role
                     </Button>
                 </DialogTrigger>

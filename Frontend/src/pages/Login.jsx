@@ -28,8 +28,8 @@ function Login() {
     return (
         <>
             <div className="bg-linear-to-br from-[#0f172a] to-[#111827] min-h-screen flex flex-col justify-center items-center">
-                <div className="bg-slate-700 rounded-lg shadow-lg p-8 w-96">
-                    <h1 className="text-4xl font-bold text-center text-slate-200 mb-8">Login</h1>
+                <div className="bg-slate-700 rounded-lg shadow-lg p-8 md:w-96 w-80">
+                    <h1 className="md:text-4xl text-2xl font-bold text-center text-slate-200 mb-8">Login</h1>
                     <form className="space-y-6" onSubmit={formSubmit}>
                         <div>
                             <label className="block text-slate-300 font-bold mb-2" htmlFor="email">

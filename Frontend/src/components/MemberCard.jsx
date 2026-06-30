@@ -11,13 +11,13 @@ import UpdateRoleModal from './form/UpdateRoleModal';
 
 function MemberCard({ member, setMembers }) {
     return (
-        <div>
-            <Card className="bg-slate-900 border-slate-800 w-1/2">
+        <div className='m-4'>
+            <Card className="bg-slate-900 border-slate-800 md:w-1/2 w-full">
                 <CardContent className="p-5">
 
-                    <div className="flex items-center justify-between">
+                    <div className="flex md:flex-row flex-col items-center md:justify-between">
 
-                        <div className="flex items-center gap-4">
+                        <div className="flex md:flex-row flex-col items-center gap-4">
 
                             <Avatar className="h-12 w-12">
                                 <AvatarImage src={member.avatar} />
@@ -26,8 +26,8 @@ function MemberCard({ member, setMembers }) {
                                 </AvatarFallback> */}
                             </Avatar>
 
-                            <div>
-                                <h3 className="font-semibold text-slate-100">
+                            <div className='justify-self-center'>
+                                <h3 className="font-semibold text-slate-100 text-center">
                                     {member.name}
                                 </h3>
 

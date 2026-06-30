@@ -19,7 +19,7 @@ export default function UserProfile() {
   const { user } = useAuth()
 
   return (
-    <div className="max-w-xl mx-auto px-6 py-8">
+    <div className="md:max-w-xl max-w-full md:mx-auto md:px-6 px-2 py-8">
 
       <Card className="bg-slate-900 border-slate-800 shadow-lg">
 

@@ -17,7 +17,7 @@ export default function MainApp() {
 
                 <SidebarTrigger className="m-4" />
                 {/* Content */}
-                <main className="flex-1 p-6 overflow-y-auto">
+                <main className="flex-1 justify-center md:p-6 p-3 overflow-y-auto">
                     <Outlet />
                 </main>
             </div>

@@ -34,7 +34,7 @@ function RemoveMemberDialog({ name, userId, setMembers, member }) {
         <div>
             <AlertDialog>
                 <AlertDialogTrigger asChild>
-                    <Button variant="destructive" className="cursor-pointer">
+                    <Button variant="destructive" className="cursor-pointer text-sm">
                         Remove
                     </Button>
                 </AlertDialogTrigger>

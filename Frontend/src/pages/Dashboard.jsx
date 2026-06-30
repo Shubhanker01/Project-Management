@@ -39,7 +39,7 @@ function Dashboard() {
             <CardTitle>Total Projects</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">{summary.totalProjects}</p>
+            <p className="md:text-2xl text-lg font-bold">{summary.totalProjects}</p>
           </CardContent>
         </Card>
 
@@ -48,7 +48,7 @@ function Dashboard() {
             <CardTitle>My Tasks</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-bold">{summary.totalTasks}</p>
+            <p className="md:text-xl text-lg font-bold">{summary.totalTasks}</p>
           </CardContent>
         </Card>
 
@@ -57,7 +57,7 @@ function Dashboard() {
             <CardTitle>Tasks Completed</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-bold">{summary.completedTasks}</p>
+            <p className="md:text-xl text-lg font-bold">{summary.completedTasks}</p>
           </CardContent>
         </Card>
       </div>
@@ -92,7 +92,7 @@ function Dashboard() {
                     <Item className="bg-gray-700 text-slate-100 mb-4 grid grid-cols-1">
                       <div>
                         <ItemContent>
-                          <ItemTitle className="text-xl">{project.name}</ItemTitle>
+                          <ItemTitle className="md:text-xl text-lg">{project.name}</ItemTitle>
                           <ItemDescription className="text-slate-200">{project.description}</ItemDescription>
                         </ItemContent>
                       </div>
