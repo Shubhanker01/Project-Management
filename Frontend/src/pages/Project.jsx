@@ -46,20 +46,22 @@ export default function Project() {
         getIndividualProject()
     }, [project.name, project.description])
     return (
-        <div className="max-w-6xl mx-auto p-6">
+        <div className="max-w-6xl mx-auto md:p-6 p-2">
             <Card className="bg-slate-900 border-slate-800 text-slate-100">
                 <CardHeader>
-                    <div className="flex items-start justify-between">
+                    <div className="flex md:flex-row flex-col items-start justify-between">
                         <div>
                             <CardTitle className="md:text-3xl text-lg">
                                 {project.name}
                             </CardTitle>
 
                         </div>
+                        <div>
+                            <Badge className="bg-emerald-600">
+                                Active
+                            </Badge>
+                        </div>
 
-                        <Badge className="bg-emerald-600">
-                            Active
-                        </Badge>
                     </div>
                 </CardHeader>
 

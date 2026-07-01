@@ -33,22 +33,24 @@ function TeamMemberDetails() {
 
     return (
         <div>
-            <div className="max-w-6xl mx-auto p-6 space-y-6">
+            <div className="max-w-full md:p-6 p-2 md:space-y-6 space-y-1.5">
 
                 <div className="flex items-center justify-between">
-                    <h1 className="md:text-3xl text-xl font-bold">
+                    <h1 className="md:text-3xl text-lg md:font-bold">
                         Team Members
                     </h1>
                     <AddMemberModal setMembers={setMembers} />
                 </div>
 
-                <div className="m-2">
+                <div className="m-2 grid lg:grid-cols-3 grid-cols-1 gap-4">
                     {members.map((member) => (
-                        <MemberCard
-                            key={member._id}
-                            member={member}
-                            setMembers={setMembers}
-                        />
+                        <div key={member._id}>
+                            <MemberCard
+                                member={member}
+                                setMembers={setMembers}
+                            />
+                        </div>
+
                     ))}
                 </div>
 

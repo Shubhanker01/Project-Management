@@ -75,7 +75,7 @@ export default function AssignedTasks({ tasks }) {
         <div className="space-y-6">
 
             <div>
-                <h1 className="text-3xl font-bold">
+                <h1 className="md:text-3xl text-xl font-bold">
                     Tasks Assigned To You
                 </h1>
 
@@ -95,14 +95,16 @@ export default function AssignedTasks({ tasks }) {
 
                         <CardHeader>
 
-                            <div className="flex justify-between items-start">
+                            <div className="flex md:flex-row flex-col justify-between items-start">
+                                <div>
+                                    <CardTitle className="text-lg text-slate-100">
+                                        {task.title}
+                                    </CardTitle>
+                                </div>
 
-                                <CardTitle className="text-lg text-slate-100">
-                                    {task.title}
-                                </CardTitle>
-
-                                {statusBadge(task.status)}
-
+                                <div>
+                                    {statusBadge(task.status)}
+                                </div>
                             </div>
 
                         </CardHeader>

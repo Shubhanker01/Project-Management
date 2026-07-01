@@ -62,7 +62,7 @@ export default function TaskCard({
     return (
         <Card className="bg-slate-800 border-slate-800 hover:border-slate-700 transition">
             <CardHeader className="pb-3">
-                <div className="flex justify-between items-start gap-4">
+                <div className="flex md:flex-row flex-col justify-between items-start gap-4">
                     <CardTitle className="text-lg text-slate-100">
                         {task.title}
                     </CardTitle>

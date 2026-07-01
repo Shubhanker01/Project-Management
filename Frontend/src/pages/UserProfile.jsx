@@ -25,7 +25,7 @@ export default function UserProfile() {
 
         <CardHeader className="flex flex-col items-center space-y-4">
 
-          <Avatar className="h-28 w-28 border-4 border-indigo-500">
+          <Avatar className="md:h-28 md:w-28 h-20 w-20 border-4 border-indigo-500">
             <AvatarImage src={user.avatar.url} />
             <AvatarFallback className="text-3xl text-slate-100">
               {user.username || "name"}
@@ -33,7 +33,7 @@ export default function UserProfile() {
           </Avatar>
 
           <div className="text-center">
-            <CardTitle className="text-2xl text-slate-100">
+            <CardTitle className="md:text-2xl text-lg text-slate-100">
               {user.username}
             </CardTitle>
 
